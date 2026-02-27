@@ -7,7 +7,6 @@ from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.star import Context, Star, register
 from astrbot.api import logger
 
-# 确保插件名唯一，避免与其它插件冲突
 @register("astrbot_plugin_qqfun", "你的名字", "实现win和自动marry功能的插件 (稳定版)", "1.0.0")
 class QQFunPlugin(Star):
     # 类变量确保全局只有一个后台任务实例
@@ -15,13 +14,13 @@ class QQFunPlugin(Star):
 
     def __init__(self, context: Context):
         super().__init__(context)
-        # 数据存储路径（使用绝对路径避免混淆）
-        self.data_dir = os.path.join(context.data_dir, 'astrbot_plugin_qqfun')
+        # 使用官方推荐的方法获取插件数据目录
+        self.data_dir = self.get_data_dir()  # 返回的是插件专属的目录路径
         os.makedirs(self.data_dir, exist_ok=True)
         self.win_file = os.path.join(self.data_dir, 'win_data.json')
         self.marry_file = os.path.join(self.data_dir, 'marry_data.json')
 
-        # 如果类变量没有任务，则创建并保存；否则复用
+        # 如果类变量没有任务或任务已结束，则创建并保存
         if QQFunPlugin._daily_task is None or QQFunPlugin._daily_task.done():
             QQFunPlugin._daily_task = asyncio.create_task(self._daily_marry_loop(), name="daily_marry")
             logger.info("每日自动配对后台任务已启动")
