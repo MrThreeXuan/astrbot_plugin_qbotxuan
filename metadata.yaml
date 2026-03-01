@@ -1,6 +1,6 @@
 name: astrbot_plugin_qbotxuan_win
-display_name: qbotxuanwin
-desc: WIN
-version: v1.1.2
+display_name: win_command
+desc: 在群聊中发送“win”指令，可以获取每日更新的“赢”值。
+version: v1.2
 author: Mr_ThreeXuan
-repo: https://github.com/MrThreeXuan/astrbot_plugin_qbotxuan
+repo: https://github.com/MrThreeXuan/astrbot_plugin_xuan_win
